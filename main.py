@@ -46,10 +46,12 @@ def get_characters(page):
 def details_comic(comic):
     # Ventana para los detalles de comics
     details_window = tk.Toplevel()
+    details_window.configure(bg='black')
     details_window.title('Detalles')
 
     # Marco para los detalles
     details_frame = tk.Frame(details_window)
+    details_frame.configure(bg='black')
     details_frame.pack(padx=10, pady=10)
 
     # Obtener datos para los detalles
@@ -70,7 +72,8 @@ def details_comic(comic):
         image = ImageTk.PhotoImage(image)
 
         # Mostrar la imagen del comic
-        label_image = ttk.Label(details_frame, image=image)
+        label_image = tk.Label(details_frame, image=image)
+        label_image.configure(bg='white')
         label_image.image = image
         label_image.pack(padx=10, pady=10)
 
@@ -79,27 +82,30 @@ def details_comic(comic):
         label_image.pack(padx=10, pady=10)
 
     # Mostrar titulo de comic
-    title_label = ttk.Label(details_frame, text=f'Titulo: {titulo}')
+    title_label = tk.Label(details_frame, text=f'Titulo: {titulo}', bg='black', fg='white')
     title_label.pack(anchor='w', padx=5, pady=5)
 
     # Mostrar ISBN
-    isbn_label = ttk.Label(details_frame, text=f'ISBN: {isbn}')
+    isbn_label = tk.Label(details_frame, text=f'ISBN: {isbn}', bg='black', fg='white')
     isbn_label.pack(anchor='w', padx=5, pady=5)
 
     # Mostrar descripción del comic
-    descripcion_label = ttk.Label(details_frame, text=f'Descripcion: {descripcion}')
+    descripcion_label = tk.Label(details_frame, text=f'Descripcion: {descripcion}', bg='black', fg='white')
     descripcion_label.pack(anchor='w', padx=5, pady=5)
 
     # Mostrar el nombre e imagen del comic
-    characters_label = ttk.Label(details_frame, text=f'Personajes en el comic: {personajes}')
+    characters_label = tk.Label(details_frame, text=f'Personajes en el comic: {personajes}', bg='black', fg='white')
     characters_label.pack(anchor='w', padx=5, pady=5)
 
     # Mostrar creadores del comic
-    creators_label = ttk.Label(details_frame, text=f'Creadores: {creadores}')
+    creators_label = tk.Label(details_frame, text=f'Creadores: {creadores}', bg='black', fg='white')
     creators_label.pack(anchor='w', padx=5, pady=5)
 
     # Botón para cerrar la ventana
-    close_button = ttk.Button(details_frame, text='Cerrar', command=details_window.destroy)
+    close_button = tk.Button(details_frame, text='Cerrar', command=details_window.destroy, bg='black', fg='white',
+                             borderwidth=0)
+    close_button.bind('<Enter>', lambda event: close_button.config(bg='#DDDDDD'))
+    close_button.bind('<Leave>', lambda event: close_button.config(bg='black'))
     close_button.pack(padx=10, pady=10)
 
     details_window.mainloop()
@@ -108,10 +114,12 @@ def details_comic(comic):
 def details_characters(character):
     # Ventana detalle personajes
     details_window = tk.Toplevel()
+    details_window.configure(bg='black')
     details_window.title('Detalles')
 
     # Marco para detalles de personaje
-    details_frame = ttk.Frame(details_window)
+    details_frame = tk.Frame(details_window)
+    details_frame.configure(bg='black')
     details_frame.pack(padx=10, pady=10)
 
     # Obtener detalles del personaje
@@ -123,7 +131,7 @@ def details_characters(character):
     events = [event.get('name', 'No disponible') for event in character.get('events', {}).get('items', [])]
 
     # Mostrar nombre de los personajes
-    name_label = tk.Label(details_frame, text=f'Nombre: {nombre}')
+    name_label = tk.Label(details_frame, text=f'Nombre: {nombre}', bg='black', fg='white')
     name_label.pack(anchor='w', padx=5, pady=5)
 
     # Mostar la imagen del personaje
@@ -136,41 +144,43 @@ def details_characters(character):
         image = ImageTk.PhotoImage(image)
 
         # Mostrar Imagen
-        image_label = ttk.Label(details_frame, image=image)
+        image_label = tk.Label(details_frame, image=image, bg='black', fg='white')
         image_label.image = image
         image_label.pack(padx=5, pady=5)
 
     except requests.exceptions.RequestException as e:
-        image_label = ttk.Label(details_frame, text=f'Image not found: {e}')
+        image_label = tk.Label(details_frame, text=f'Image not found: {e}', bg='black', fg='white')
         image_label.pack(padx=5, pady=5)
 
     # Mostrar la descripcion del personaje
-    description_label = tk.Label(details_frame, text=f'Descripcion: {descripcion}')
+    description_label = tk.Label(details_frame, text=f'Descripcion: {descripcion}', bg='black', fg='white')
     description_label.pack(anchor='w', padx=5, pady=5)
 
     # Mostrar creadores del personaje
-    creators_label = tk.Label(details_frame, text=f'Creadores: {creators}')
+    creators_label = tk.Label(details_frame, text=f'Creadores: {creators}', bg='black', fg='white')
     creators_label.pack(anchor='w', padx=5, pady=5)
 
     # Mostrar los comics del personaje
-    comics_label = tk.Label(details_frame, text='Comics del personaje')
+    comics_label = tk.Label(details_frame, text='Comics del personaje', bg='black', fg='white')
     comics_label.pack(anchor='w', padx=5, pady=5)
 
     for i in range(0, len(comics), 10):
         comics_character = comics[i:i + 10]  # Comics desde la pos 0 hasta el 9 o 1-10
         comics_character_text = ', '.join(comics_character)
-        comics_character_label = tk.Label(details_frame, text=comics_character_text)
+        comics_character_label = tk.Label(details_frame, text=comics_character_text, bg='black', fg='white')
         comics_character_label.pack(anchor='w', padx=5, pady=5)
 
     # Mostrar los eventos del personaje
     for i in range(0, len(events), 10):
         event_character = events[i:i + 10]
         event_character_text = ', '.join(event_character)
-        event_character_label = tk.Label(details_frame, text=event_character_text)
+        event_character_label = tk.Label(details_frame, text=event_character_text, bg='black', fg='white')
         event_character_label.pack(anchor='w', padx=5, pady=5)
 
     # Cerrar detalles
-    close_button = tk.Button(details_frame, text='Cerrar', command=details_window.destroy)
+    close_button = tk.Button(details_frame, text='Cerrar', command=details_window.destroy, bg='black', fg='white')
+    close_button.bind('<Enter>', lambda event: close_button.config(bg='#DDDDDD'))
+    close_button.bind('<Leave>', lambda event: close_button.config(bg='black'))
     close_button.pack(padx=5, pady=5)
 
     details_window.mainloop()
@@ -202,7 +212,7 @@ def page_comics():
                 image = image.resize((150, 220), Image.LANCZOS)
                 image = ImageTk.PhotoImage(image)
 
-                label_comic_image = tk.Label(comics_frame, image=image)
+                label_comic_image = tk.Label(comics_frame, image=image, bg='white')
                 label_comic_image.image = image
                 label_comic_image.grid(row=(i // 5) * 3, column=(i % 5), padx=5, pady=5)
 
@@ -211,13 +221,14 @@ def page_comics():
                 label_comic_image.grid(row=(i // 5) * 3, column=(i % 5), padx=5, pady=5)
 
             # Mostrar boton de detalles
-            details_button = tk.Button(comics_frame, text='Detalles', command=lambda com=comic: details_comic(com))
+            details_button = tk.Button(comics_frame, text='Detalles', command=lambda com=comic: details_comic(com),
+                                       bg='white', fg='black', font=('Arial black', 10), borderwidth=2)
             details_button.grid(row=(i // 5) * 3 + 2, column=(i % 5), padx=5, pady=5)
 
         list_names = names_comics.get_list()
         for i in range(len(list_names)):
             # Mostar, nombre del comic debajo de la imagen
-            name_label = tk.Label(comics_frame, text=list_names[i])
+            name_label = tk.Label(comics_frame, text=list_names[i], bg='black', fg='white', font=('Arial Black', 10))
             name_label.grid(row=(i // 5) * 3 + 1, column=(i % 5), padx=5, pady=5)
 
     def pag_anterior():
@@ -247,25 +258,37 @@ def page_comics():
         show_page(current_page)
 
     comics_window = tk.Toplevel()
+    comics_window.configure(bg='black')
     comics_window.title('Comics')
 
-    comics_frame = ttk.Frame(comics_window)
+    comics_frame = tk.Frame(comics_window)
+    comics_frame.configure(bg='black')
     comics_frame.pack(padx=10, pady=10)
 
     current_offset = 0
 
     show_page(current_offset)
 
-    navegator_frame = ttk.Frame(comics_window)
+    navegator_frame = tk.Frame(comics_window)
+    navegator_frame.configure(bg='white')
     navegator_frame.pack(pady=5)
 
-    prev_button = ttk.Button(navegator_frame, text='Página Anterior', command=pag_anterior)
+    prev_button = tk.Button(navegator_frame, text='<<<', command=pag_anterior, bg='white',
+                            font=('Arial black', 12), borderwidth=0)
+    prev_button.bind('<Enter>', lambda event: prev_button.config(bg='red'))
+    prev_button.bind('<Leave>', lambda event: prev_button.config(bg='white'))
     prev_button.grid(row=0, column=0, padx=5)
 
-    next_button = ttk.Button(navegator_frame, text='Página Siguiente', command=pag_siguiente)
+    next_button = tk.Button(navegator_frame, text='>>>', command=pag_siguiente, bg='white',
+                            font=('Arial black', 12), borderwidth=0)
+    next_button.bind('<Enter>', lambda event: next_button.config(bg='red'))
+    next_button.bind('<Leave>', lambda event: next_button.config(bg='white'))
     next_button.grid(row=0, column=2, padx=5)
 
-    home_button = ttk.Button(navegator_frame, text='Regresar a la Página Principal', command=comics_window.destroy)
+    home_button = tk.Button(navegator_frame, text='HOME', command=comics_window.destroy, bg='white',
+                            borderwidth=0, font=('Arial black', 12))
+    home_button.bind('<Enter>', lambda event: home_button.config(bg='red'))
+    home_button.bind('<Leave>', lambda event: home_button.config(bg='white'))
     home_button.grid(row=0, column=1, padx=5)
 
 
@@ -295,7 +318,7 @@ def page_characters():
                 image = image.resize((150, 220), Image.LANCZOS)
                 image = ImageTk.PhotoImage(image)
 
-                label_character_image = tk.Label(characters_frame, image=image)
+                label_character_image = tk.Label(characters_frame, image=image, bg='white')
                 label_character_image.image = image
                 label_character_image.grid(row=(i // 5) * 3, column=(i % 5), padx=5, pady=5)
 
@@ -305,13 +328,14 @@ def page_characters():
 
             # Mostrar boton de detalles
             details_button = tk.Button(characters_frame, text='Detalles', command=lambda char=character:
-                                       details_comic(char))
+                                       details_comic(char), bg='white', fg='black', font=('Arial black', 10))
             details_button.grid(row=(i // 5) * 3 + 2, column=(i % 5), padx=5, pady=5)
 
         list_names = names_characters.get_list()
         for i in range(len(list_names)):
             # Mostar, nombre del personaje debajo de la imagen
-            name_label = tk.Label(characters_frame, text=list_names[i])
+            name_label = tk.Label(characters_frame, text=list_names[i], bg='black', fg='white',
+                                  font=('Arial black', 12))
             name_label.grid(row=(i // 5) * 3 + 1, column=(i % 5), padx=5, pady=5)
 
     def pag_anterior():
@@ -341,25 +365,37 @@ def page_characters():
         show_page(current_page)
 
     characters_window = tk.Toplevel()
+    characters_window.configure(bg='black')
     characters_window.title('Personajes')
 
-    characters_frame = ttk.Frame(characters_window)
+    characters_frame = tk.Frame(characters_window)
+    characters_frame.configure(bg='black')
     characters_frame.pack(padx=10, pady=10)
 
     current_offset = 0
 
     show_page(current_offset)
 
-    navegator_frame = ttk.Frame(characters_window)
+    navegator_frame = tk.Frame(characters_window)
+    navegator_frame.configure(bg='white')
     navegator_frame.pack(pady=5)
 
-    prev_button = ttk.Button(navegator_frame, text='Página Anterior', command=pag_anterior)
+    prev_button = tk.Button(navegator_frame, text='<<<', command=pag_anterior, bg='white',
+                            font=('Arial', 12), borderwidth=0)
+    prev_button.bind('<Enter>', lambda event: prev_button.config(bg='red'))
+    prev_button.bind('<Leave>', lambda event: prev_button.config(bg='white'))
     prev_button.grid(row=0, column=0, padx=5)
 
-    next_button = ttk.Button(navegator_frame, text='Página Siguiente', command=pag_siguiente)
+    next_button = tk.Button(navegator_frame, text='>>>', command=pag_siguiente, bg='white',
+                            font=('Arial', 12), borderwidth=0)
+    next_button.bind('<Enter>', lambda event: next_button.config(bg='red'))
+    next_button.bind('<Leave>', lambda event: next_button.config(bg='white'))
     next_button.grid(row=0, column=2, padx=5)
 
-    home_button = ttk.Button(navegator_frame, text='Regresar a la Página Principal', command=characters_window.destroy)
+    home_button = tk.Button(navegator_frame, text='HOME', command=characters_window.destroy,
+                            bg='white', font=('Arial', 12), borderwidth=0)
+    home_button.bind('<Enter>', lambda event: home_button.config(bg='red'))
+    home_button.bind('<Leave>', lambda event: home_button.config(bg='white'))
     home_button.grid(row=0, column=1, padx=5)
 
 
